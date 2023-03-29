@@ -1,5 +1,6 @@
-import RESTSerializer from '@ember-data/serializer/rest';
 import { decamelize } from '@ember/string';
+import { isNone } from '@ember/utils';
+import RESTSerializer from '@ember-data/serializer/rest';
 
 const PAGENUM_REGEX = /.*?[?&]page=(\d+).*?/;
 const REL_REGEX = /^((https?:)?\/\/|\/)\w/; // Matches strings starting with: https://, http://, //, /
@@ -19,14 +20,14 @@ export default class DrfSerializer extends RESTSerializer {
    * @return {Object}
    */
   extractRelationships(modelClass, resourceHash) {
-    if (!resourceHash.hasOwnProperty('links')) {
+    if (!Object.hasOwn(resourceHash, 'links')) {
       resourceHash['links'] = {};
     }
 
     modelClass.eachRelationship(function (key, relationshipMeta) {
       const payloadRelKey = this.keyForRelationship(key);
 
-      if (!resourceHash.hasOwnProperty(payloadRelKey)) {
+      if (!Object.hasOwn(resourceHash, payloadRelKey)) {
         return;
       }
 
@@ -48,7 +49,7 @@ export default class DrfSerializer extends RESTSerializer {
       }
     }, this);
 
-    return this._super(modelClass, resourceHash);
+    return super.extractRelationship(modelClass, resourceHash);
   }
 
   /**
@@ -92,9 +93,9 @@ export default class DrfSerializer extends RESTSerializer {
 
     if (
       !isNone(payload) &&
-      payload.hasOwnProperty('next') &&
-      payload.hasOwnProperty('previous') &&
-      payload.hasOwnProperty('results')
+      Object.hasOwn(payload, 'next') &&
+      Object.hasOwn(payload, 'previous') &&
+      Object.hasOwn(payload, 'results')
     ) {
       // Move DRF metadata to the meta hash.
       convertedPayload[primaryModelClass.modelName] = JSON.parse(
@@ -133,7 +134,7 @@ export default class DrfSerializer extends RESTSerializer {
       convertedPayload[primaryModelClass.modelName] = first;
     }
 
-    return this._super(
+    return super.normalizeResponse(
       store,
       primaryModelClass,
       convertedPayload,
