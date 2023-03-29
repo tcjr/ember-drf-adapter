@@ -3,7 +3,7 @@ import AdapterError, { InvalidError } from '@ember-data/adapter/error';
 import { isArray } from '@ember/array';
 import { dasherize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
-import RESTAdapter from 'ember-data/adapters/rest';
+import RESTAdapter from '@ember-data/adapter/rest';
 
 const ERROR_MESSAGES = {
   401: 'Unauthorized',
@@ -122,7 +122,7 @@ export default class DrfAdapter extends RESTAdapter {
 
     for (let key in payload) {
       /*jshint loopfunc: true */
-      if (payload.hasOwnProperty(key)) {
+      if (Object.hasOwn(payload, key)) {
         if (isArray(payload[key])) {
           payload[key].forEach((error) => {
             if (key === this.nonFieldErrorsKey) {
@@ -164,7 +164,7 @@ export default class DrfAdapter extends RESTAdapter {
    */
   _formatPayload(payload) {
     for (let key in payload) {
-      if (payload.hasOwnProperty(key)) {
+      if (Object.hasOwn(payload, key)) {
         if (typeof payload[key] === 'string') {
           payload[key] = [payload[key]];
         }
