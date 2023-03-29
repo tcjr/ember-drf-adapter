@@ -1,6 +1,6 @@
 {
   "name": "ember-drf-adapter",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "repository": "https://github.com/tcjr/ember-drf-adapter.git",
   "license": "MIT",
