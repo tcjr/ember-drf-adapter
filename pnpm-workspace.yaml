@@ -1,0 +1,3 @@
+packages:
+  - 'ember-drf-adapter'
+  - 'test-app'

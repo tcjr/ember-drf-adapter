@@ -8,7 +8,7 @@ as a backend for Ember apps.
 
 ## Compatibility
 
-- Ember.js v3.28 or above
+- Ember.js v4.8 or above
 - Embroider or ember-auto-import v2
 
 ## Installation

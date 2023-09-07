@@ -15,16 +15,12 @@ export default {
   plugins: [
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
-    addon.publicEntrypoints([
-      'adapters/**/*.js',
-      'serializers/**/*.js',
-      'index.js',
-    ]),
+    addon.publicEntrypoints(['components/**/*.js', 'index.js']),
 
     // These are the modules that should get reexported into the traditional
     // "app" tree. Things in here should also be in publicEntrypoints above, but
     // not everything in publicEntrypoints necessarily needs to go here.
-    addon.appReexports(['adapters/**/*.js', 'serializers/**/*.js']),
+    addon.appReexports(['components/**/*.js']),
 
     // Follow the V2 Addon rules about dependencies. Your code can import from
     // `dependencies` and `peerDependencies` as well as standard Ember-provided
@@ -38,11 +34,15 @@ export default {
     // By default, this will load the actual babel config from the file
     // babel.config.json.
     babel({
+      extensions: ['.js', '.gjs'],
       babelHelpers: 'bundled',
     }),
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
+
+    // Ensure that .gjs files are properly integrated as Javascript
+    addon.gjs(),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
