@@ -12,6 +12,8 @@ export default {
   // You can augment this if you need to.
   output: addon.output(),
 
+  external: ['@ember-data'],
+
   plugins: [
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
@@ -38,15 +40,19 @@ export default {
     // By default, this will load the actual babel config from the file
     // babel.config.json.
     babel({
+      extensions: ['.js', '.gjs'],
       babelHelpers: 'bundled',
     }),
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
 
+    // Ensure that .gjs files are properly integrated as Javascript
+    addon.gjs(),
+
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
-    addon.keepAssets(['**/*.css']),
+    // addon.keepAssets(['**/*.css']),
 
     // Remove leftover build artifacts when starting a new build.
     addon.clean(),

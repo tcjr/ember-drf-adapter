@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "ember-cli",
-      "version": "4.11.0",
+      "version": "5.1.0",
       "blueprints": [
         {
           "name": "app",
@@ -12,7 +12,7 @@
           "isBaseBlueprint": true,
           "options": [
             "--no-welcome",
-            "--yarn",
+            "--pnpm",
             "--ci-provider=travis"
           ]
         }
